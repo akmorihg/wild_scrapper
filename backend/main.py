@@ -4,7 +4,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from starlette.responses import FileResponse
 
 from data import read_excel, append_to_df
-from models import ItemCollection, Item
+from models import ItemCollection
+
+import uvicorn
 
 DATA_PATH = "data.xlsx"
 
@@ -36,11 +38,13 @@ async def say_hello(name: str):
 
 @app.post("/items/")
 async def create_item(item_collection: ItemCollection):
-    df: pd.DataFrame = read_excel(DATA_PATH)
-    append_to_df(df, item_collection)
+    append_to_df(pd.DataFrame(), item_collection)
     return item_collection
 
 @app.get("/excels/")
 async def get_excel():
     read_excel(DATA_PATH)
     return FileResponse(path=DATA_PATH, filename="Сбор данных.xlsx", media_type='multipart/form-data')
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)

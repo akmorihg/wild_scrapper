@@ -45,7 +45,7 @@ function scrap_data(){
 
     console.log(jsonString);
 
-    let BASE_URL = "http://localhost:8000/";
+    let BASE_URL = "http://195.49.210.199:8000/";
 
     let xhr = new XMLHttpRequest();
     xhr.open("POST", BASE_URL + "items/");
